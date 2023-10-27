@@ -16,15 +16,21 @@ import java.util.ArrayList;
 
 public class TiendaDeRopa extends JFrame {
     private ArrayList<Vendible> productos = new ArrayList<>();
+    private JLabel bienvenidaLabel;
 
     public TiendaDeRopa() {
         setTitle("Tienda de Ropa");
-        setSize(400, 200);
+        setSize(400, 300); // Aumenté la altura para dar más espacio al mensaje de bienvenida
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        getContentPane().add(panel);
-        panel.setLayout(new FlowLayout());
+        // Crear el mensaje de bienvenida
+        bienvenidaLabel = new JLabel("¡Bienvenido a la Tienda de Ropa!");
+        bienvenidaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        bienvenidaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Crear un panel para los botones
+        JPanel botonesPanel = new JPanel();
+        botonesPanel.setLayout(new GridLayout(4, 1, 10, 10)); // 4 filas, 1 columna, con espaciado
 
         JButton agregarCamisaButton = new JButton("Agregar Camisa");
         JButton agregarPantalonButton = new JButton("Agregar Pantalón");
@@ -67,17 +73,27 @@ public class TiendaDeRopa extends JFrame {
             }
         });
 
-        panel.add(agregarCamisaButton);
-        panel.add(agregarPantalonButton);
-        panel.add(mostrarProductosButton);
-        panel.add(eliminarPrendaButton);
+         botonesPanel.add(agregarCamisaButton);
+        botonesPanel.add(agregarPantalonButton);
+        botonesPanel.add(mostrarProductosButton);
+        botonesPanel.add(eliminarPrendaButton);
+
+        // Crear un panel principal
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        // Agregar el mensaje de bienvenida en la parte superior
+        panel.add(bienvenidaLabel, BorderLayout.NORTH);
+        panel.add(botonesPanel, BorderLayout.CENTER);
+
+        getContentPane().add(panel);
     }
 
-    private void agregarProducto(Vendible producto) {
+    public void agregarProducto(Vendible producto) {
         productos.add(producto);
     }
 
-    private void mostrarProductos() {
+    public void mostrarProductos() {
         if (productos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No hay productos en la tienda.");
         } else {
@@ -89,7 +105,7 @@ public class TiendaDeRopa extends JFrame {
         }
     }
 
-    private void eliminarProducto() {
+    public void eliminarProducto() {
         if (productos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No hay productos para eliminar.");
         } else {
